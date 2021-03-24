@@ -29,18 +29,17 @@ public class Bak_1600 {
 
 	public static void bfs() {
 		Queue<Pair> q = new LinkedList<>();
-
+		memo[0][0][0] = true;
 		q.add(new Pair(0, 0, K, 0));
 		while (!q.isEmpty()) {
 
 			Pair temp = q.poll();
-			if (memo[temp.x][temp.y][temp.count])
-				continue;
-			memo[temp.x][temp.y][temp.count] = true;
+		
+			//memo[temp.x][temp.y][temp.count] = true;
 			if (temp.x == H - 1 && temp.y == W - 1) {
 				if (min > temp.step)
 					min = temp.step;
-				continue;
+				break;
 			}
 			if (temp.count > 0) {
 				for (int i = 0; i < nightx.length; i++) {
@@ -50,6 +49,7 @@ public class Bak_1600 {
 						continue;
 					if (maps[nix][niy] != 1 && !memo[nix][niy][temp.count - 1]) {
 						q.add(new Pair(nix, niy, temp.count - 1, temp.step + 1));
+						memo[nix][niy][temp.count - 1] = true;
 					}
 				}
 
@@ -61,8 +61,10 @@ public class Bak_1600 {
 				if (nx < 0 || nx >= H || ny < 0 || ny >= W)
 					continue;
 				if (maps[nx][ny] != 1) {
-					if (!memo[nx][ny][temp.count])
+					if (!memo[nx][ny][temp.count]) {
 						q.add(new Pair(nx, ny, temp.count, temp.step + 1));
+						memo[nx][ny][temp.count] = true;
+					}
 				}
 			}
 
